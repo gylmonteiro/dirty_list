@@ -27,6 +27,7 @@ class Person(models.Model):
     person_relations = models.ManyToManyField(
         "Relationship", related_name="person_relationships"
     )
+
     def __str__(self):
         return f'{self.name} - id: {self.number_register.hex}'
 

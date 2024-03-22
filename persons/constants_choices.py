@@ -29,7 +29,7 @@ CHOICE_STATE = (
 )
 
 
-CHOICE_RELATION = ( 
+CHOICE_RELATION = (
     ("SIBLINGS", "Irmãos"),
     ("FATHER", "Pai"),
     ("MOTHER", "Mãe"),
