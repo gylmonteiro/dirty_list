@@ -29,18 +29,18 @@ CHOICE_STATE = (
 )
 
 
-CHOICE_RELATION = (
+CHOICE_RELATION = ( 
     ("SIBLINGS", "Irmãos"),
     ("FATHER", "Pai"),
     ("MOTHER", "Mãe"),
     ("GRANDPARENTS", "Avôs/Avós"),
     ("AUNT_UNCLE", "Tios/Tias"),
     ("COUSIN", "Primo/Prima"),
-    ("NEPHEW_NIECE', 'Sobrinho/Sobrinhao"),
-    ("GODPARENTS', 'Padrinhos/Madrinhaso"),
+    ("NEPHEW_NIECE", "Sobrinho/Sobrinhao"),
+    ("GODPARENTS", "Padrinhos/Madrinhaso"),
     ("FRIEND", "Amigo"),
     ("COLLEAGUE", "Colega de trabalho"),
     ("PARTNER", "Parceiro/Parceira"),
     ("HUSBAND_WIFE", "Esposo/Esposa"),
-    ("CHILD', 'Filho/Filha"),
+    ("CHILD", "Filho/Filha"),
 )
