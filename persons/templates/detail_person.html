@@ -1,4 +1,17 @@
 {% if person %}
 
     <h1>{{person.name}}</h1>
+    <ul>
+        {% for relation in person.person_relations.all  %}
+        {{relation.person.name}} > {{relation.type_relation}}
+        {% endfor %}
+        <li>
+    </ul>
+
+    <form method="GET" action="{% url 'relation-persons-create' %}">
+        {% csrf_token %}
+        <input type="hidden" name="id_person" value={{person.id}}>
+        <button type="submit">Enviar Dados</button>
+    </form>
+
 {% endif %}
