@@ -1,8 +1,9 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 from django.views.generic import CreateView, ListView
 from persons.models import Person
 from persons.forms import PersonCreateModelForm
 # Create your views here.
+
 
 class PersonListView(ListView):
     model = Person
@@ -15,4 +16,3 @@ class PersonCreateView(CreateView):
     form_class = PersonCreateModelForm
     template_name = 'create_persons.html'
     success_url = '/list_persons.html/'
-    
