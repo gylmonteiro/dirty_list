@@ -25,7 +25,7 @@ class Person(models.Model):
     cpf = models.CharField(max_length=11, blank=True, null=True, validators=[validator_cpf], default='')
     address = models.ForeignKey(Address, null=True, blank=True, related_name='persons', on_delete=models.SET_NULL)
     person_relations = models.ManyToManyField(
-        "Relationship", related_name="person_relationships"
+        "Relationship", related_name="person_relationships", blank=True
     )
 
     def __str__(self):
