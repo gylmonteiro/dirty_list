@@ -1,8 +1,5 @@
 from django.http import Http404
-from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import redirect
-from django.db.models.base import Model as Model
-from django.db.models.query import QuerySet
 from django.views.generic import CreateView, ListView, DetailView
 from persons.models import Person
 from persons.forms import PersonCreateModelForm
