@@ -1,5 +1,4 @@
-from typing import Any
-from django.http import Http404, HttpRequest, HttpResponse
+from django.http import Http404
 from django.shortcuts import redirect
 from django.views.generic import CreateView, ListView, DetailView
 from persons.models import Person, Relationship
@@ -38,13 +37,12 @@ class RelationPersonCreateView(CreateView):
     template_name = 'create_relation.html'
     success_url = '/persons/'
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         person_id = self.request.GET.get("id_person")
         context["person_id"] = person_id
         return context
-    
+
     def form_valid(self, form):
         person_id = self.request.POST.get('id_person')
         person = Person.objects.get(pk=person_id)

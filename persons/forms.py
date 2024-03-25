@@ -7,6 +7,7 @@ class PersonCreateModelForm(forms.ModelForm):
         model = Person
         fields = ['name', 'cpf']
 
+
 class RelationPersonCreateModelForm(forms.ModelForm):
     class Meta:
         model = Relationship
