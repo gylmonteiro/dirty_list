@@ -3,15 +3,15 @@
     <h1>{{person.name}}</h1>
     <ul>
         {% for relation in person.person_relations.all  %}
-        {{relation.person.name}} > {{relation.type_relation}}
+        <li>{{relation.person.name}} > {{relation.type_relation}}</li>
         {% endfor %}
-        <li>
+        
     </ul>
 
     <form method="GET" action="{% url 'relation-persons-create' %}">
         {% csrf_token %}
         <input type="hidden" name="id_person" value={{person.id}}>
-        <button type="submit">Enviar Dados</button>
+        <button type="submit">Relacionar pessoas</button>
     </form>
 
 {% endif %}

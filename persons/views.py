@@ -37,19 +37,17 @@ class RelationPersonCreateView(CreateView):
     form_class = RelationPersonCreateModelForm
     template_name = 'create_relation.html'
     success_url = '/persons/'
-    person_id = None
-    
-    def get(self, request, *args, **kwargs):
-        self.person_id = request.GET.get('id_person')
-        return super().get(request, *args, **kwargs)
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        person_id = self.request.GET.get("id_person")
+        context["person_id"] = person_id
+        return context
     
     def form_valid(self, form):
-       
-        
-        person = Person.objects.get(pk=self.person_id)
-
-        relation = form.save(commit=False)
-        relation.save()
-        person.person_relations.add(relation)
+        person_id = self.request.POST.get('id_person')
+        person = Person.objects.get(pk=person_id)
+        relationship = form.save()
+        person.person_relations.add(relationship)
         return super().form_valid(form)
-    
