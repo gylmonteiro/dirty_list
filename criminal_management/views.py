@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.views import generic
 from .models import Faction
 from .forms import FactionForm
@@ -27,11 +27,11 @@ class FactionSelectView(generic.TemplateView):
 
 
 class FactionUpdateView(generic.View):
-    
+
     def post(self,request, *args, **kwargs):
         faction_id = request.POST.get('opcoes')
         person_id = request.POST.get('person')
         faction = Faction.objects.get(pk=faction_id)
         person = Person.objects.get(pk=person_id)
         faction.member.add(person)
-        return HttpResponse("Vamos ver")
+        return redirect("person-list")
