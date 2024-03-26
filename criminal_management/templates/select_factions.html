@@ -3,13 +3,12 @@
     <form action="{% url "add-member"%}"  method="POST">
         {% csrf_token %}
         <label for="opcoes">Escolha a facção:</label>
-        <select id="opcoes" name="opcoes">
+        <select id="opcoes" name="faction">
             {% for faction in factions %}
                 <option value="{{faction.id}}">{{faction.name}}</option>
             
             {% endfor %}
 
-            <!-- Adicione mais opções conforme necessário -->
         </select>
         
         <input type="hidden" name="person" value={{person.id}}>
