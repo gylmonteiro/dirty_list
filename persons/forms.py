@@ -13,6 +13,7 @@ class RelationPersonCreateModelForm(forms.ModelForm):
         model = Relationship
         fields = '__all__'
 
+
 class AddressCreateModelForm(forms.ModelForm):
     class Meta:
         model = Address

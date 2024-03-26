@@ -70,4 +70,3 @@ class AddressCreateView(CreateView):
         person.address = address
         person.save()
         return super().form_valid(form)
-    
