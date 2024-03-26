@@ -1,7 +1,7 @@
 from django.db import models
 from persons.models import Person
 
-# Create your models here.
+
 class Faction(models.Model):
     name = models.CharField(max_length=255, unique=True)
     member = models.ManyToManyField(Person, related_name='members', blank=True)
@@ -10,4 +10,3 @@ class Faction(models.Model):
 
     def __str__(self):
         return self.name
-    
