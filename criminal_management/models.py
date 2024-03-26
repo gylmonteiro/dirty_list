@@ -10,3 +10,14 @@ class Faction(models.Model):
 
     def __str__(self):
         return self.name
+
+class Incident(models.Model):
+    title = models.CharField(max_length=255)
+    location = models.CharField(max_length=100)
+    reported_at = models.DateField(blank=True)
+    person_relation = models.ForeignKey(Person, blank=True, null=True, related_name='incident', on_delete=models.SET_NULL)
+    involved = models.ManyToManyField(Person, blank=True, related_name="involved_persons")
+
+    def __str__(self):
+        return self.title
+    
