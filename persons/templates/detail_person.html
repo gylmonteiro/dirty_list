@@ -20,4 +20,10 @@
         <button type="submit">Associar endereço</button>
     </form>
 
+    <form method="GET" action="{% url 'select-faction' %}">
+        {% csrf_token %}
+        <input type="hidden" name="id_person" value={{person.id}}>
+        <button type="submit">Associar a facção</button>
+    </form>
+
 {% endif %}
