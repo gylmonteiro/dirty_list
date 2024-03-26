@@ -14,4 +14,10 @@
         <button type="submit">Relacionar pessoas</button>
     </form>
 
+    <form method="GET" action="{% url 'address-create' %}">
+        {% csrf_token %}
+        <input type="hidden" name="id_person" value={{person.id}}>
+        <button type="submit">Associar endereço</button>
+    </form>
+
 {% endif %}

@@ -1,8 +1,8 @@
 from django.http import Http404
 from django.shortcuts import redirect
 from django.views.generic import CreateView, ListView, DetailView
-from persons.models import Person, Relationship
-from persons.forms import PersonCreateModelForm, RelationPersonCreateModelForm
+from persons.models import Person, Relationship, Address
+from persons.forms import PersonCreateModelForm, RelationPersonCreateModelForm, AddressCreateModelForm
 # Create your views here.
 
 
@@ -49,3 +49,25 @@ class RelationPersonCreateView(CreateView):
         relationship = form.save()
         person.person_relations.add(relationship)
         return super().form_valid(form)
+
+
+class AddressCreateView(CreateView):
+    model = Address
+    form_class = AddressCreateModelForm
+    template_name = 'create_address.html'
+    success_url = '/persons/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        person_id = self.request.GET.get("id_person")
+        context["person_id"] = person_id
+        return context
+
+    def form_valid(self, form):
+        person_id = self.request.POST.get('id_person')
+        person = Person.objects.get(pk=person_id)
+        address = form.save()
+        person.address = address
+        person.save()
+        return super().form_valid(form)
+    
