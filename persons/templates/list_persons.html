@@ -1,18 +1,37 @@
-<div>
-    {% if persons %}
-    {% for person in persons  %}
-    
-    <a href="{% url 'person-detail' person.id %}"><h1> {{person.name}} > {{person.id}}</h1></a>
-    
-    {% endfor %}
-    {% else %}
+{% extends "base/base.html" %}
+{% load static %}
 
+{% block 'content' %}
+<div class="container">    
+    {% if persons %}
+
+
+    <ol class="list-group list-group-numbered">
+        {% for person in persons  %}
+            <a href="{% url 'person-detail' person.id %}"><li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                <div class="fw-bold">{{person.name}}</div>
+                {{person.number_register}}
+                </div>
+                <span class="badge bg-primary rounded-pill">14</span>
+            </li></a>
+        {% endfor %}
+    </ol>
+
+
+   
+    
+    {% comment %} <a href="{% url 'person-detail' person.id %}"><h1> {{person.name}}</h1></a> {% endcomment %}
+    
+    
+    {% else %}
+    
     <h1>Nenhuma pessoa localizada </h1>
     
     {% endif %}
-
-
-
-
-
+    
 </div>
+
+
+
+{% endblock 'content' %}

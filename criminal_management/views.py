@@ -26,8 +26,6 @@ class FactionSelectView(generic.TemplateView):
         return context
 
     def post(self, request, *args, **kwargs):
-        # if request.POST.get('leader or member') -> criar a lógica internamente para saber se é um leader ou somente um member
-
         leader = request.POST.get("leader")
         faction_id = request.POST.get("faction")
         person_id = request.POST.get("person")
