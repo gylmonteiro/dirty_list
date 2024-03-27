@@ -26,4 +26,10 @@
         <button type="submit">Associar a facção</button>
     </form>
 
+     <form method="GET" action="{% url 'registration-incident' %}">
+        {% csrf_token %}
+        <input type="hidden" name="id_person" value={{person.id}}>
+        <button type="submit">Registrar ocorrência</button>
+    </form>
+
 {% endif %}

@@ -64,7 +64,8 @@ class AddressCreateView(CreateView):
         return context
 
     def form_valid(self, form):
-        person_id = self.request.POST.get('id_person')
+        person_id = self.request.POST.get('person')
+        print(person_id)
         person = Person.objects.get(pk=person_id)
         address = form.save()
         person.address = address

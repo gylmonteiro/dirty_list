@@ -2,7 +2,7 @@
     {% if persons %}
     {% for person in persons  %}
     
-    <h1> {{person.name}} > {{person.id}}</h1>
+    <a href="{% url 'person-detail' person.id %}"><h1> {{person.name}} > {{person.id}}</h1></a>
     
     {% endfor %}
     {% else %}
