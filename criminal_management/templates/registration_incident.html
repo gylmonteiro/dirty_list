@@ -1,16 +1,19 @@
 <h1> Página para registrar os incidentes </h1>
 
-<form method='POST' action='{% url "registration-incident" %}'>
-{% csrf_token %}
+   <form method='POST' action='{% url "registration-incident" %}'>
+    {% csrf_token %}
 
-    <table>
-        {{form.as_table}}
-    </table>
-    <input type="hidden" name="person" value={{person.id}}>
+      <table>
+          {{form.as_table}}
+      </table>
+      <input type="hidden" name="person" value={{person.id}}>
 
-    <input type='submit' value='Registrar'>
+      <input type='submit' value='Registrar'>
+    
+    </form> 
 
-</form>
+<hr>
+
 
 {% comment %} Script abaixo renderiza um campo dinâmico para pesquisar {% endcomment %}
 

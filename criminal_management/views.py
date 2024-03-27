@@ -1,4 +1,3 @@
-from typing import Any
 from django.shortcuts import redirect
 from django.views import generic
 from .models import Faction, Incident
@@ -64,6 +63,7 @@ class RegisterIncident(generic.CreateView):
         incident_form.save()
 
         return super().form_valid(form)
+
 
 '''
 class FactionUpdateView(generic.View):
