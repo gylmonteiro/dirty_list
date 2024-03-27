@@ -11,6 +11,7 @@ class Faction(models.Model):
     def __str__(self):
         return self.name
 
+
 class Incident(models.Model):
     title = models.CharField(max_length=255)
     location = models.CharField(max_length=100)
@@ -20,4 +21,3 @@ class Incident(models.Model):
 
     def __str__(self):
         return self.title
-    
