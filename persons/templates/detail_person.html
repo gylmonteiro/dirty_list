@@ -62,7 +62,8 @@
             <a class="list-group-item list-group-item-action" href="#list-item-1">Dados pessoais</a>
             <a class="list-group-item list-group-item-action" href="#list-item-2">Endereço</a>
             <a class="list-group-item list-group-item-action" href="#list-item-3">Ocorrências</a>
-            <a class="list-group-item list-group-item-action" href="#list-item-4">Observações</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-4">Relacionamentos</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-5">Observações</a>
             </div>
         </div>
     </div> 
@@ -81,25 +82,14 @@
                     {{person.cpf|default:"CPF não informado"|upper}}
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span class="badge bg-primary rounded-pill">Data de Nascimento</span>
+                    {{person.date_birthday|date:"d/m/Y"|default:"data não informada"}}
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="badge bg-primary rounded-pill">Idade</span>
                     {{person.age|default:"Data não informada"}} anos
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span class="badge bg-primary rounded-pill">Pai</span>
-                    {% if pessoa.pai %}
-                    <a href="{% url "detalhes_da_pessoa" pessoa.pai.id %}">{{pessoa.pai.nome|upper}}</a>
-                    {% else %}
-                    Sem cadastro
-                    {% endif %}
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span class="badge bg-primary rounded-pill">Mãe</span>
-                    {% if pessoa.mae %}
-                    <a href="{% url "detalhes_da_pessoa" pk=pessoa.mae.id %}">{{pessoa.mae.nome|upper}}</a>
-                    {% else %}
-                    Sem cadastro
-                    {% endif %}
-                </li>
+               
             </ul>
 
             {% comment %} Acordion para endereço {% endcomment %}
@@ -118,7 +108,6 @@
                                     <span class="badge bg-primary rounded-pill">Rua</span>
                                     {{ person.address.street|upper }}
                                 </li>
-                                <!-- Outros campos de endereço aqui -->
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <span class="badge bg-primary rounded-pill">Cidade</span>
                                     {{person.address.city|upper}}
@@ -143,7 +132,10 @@
                                     <span class="badge bg-primary rounded-pill">Coordenadas</span>
                                     {{person.address.coordenadas|upper}}
                                 </li>
+                            {% else %}
+                            Sem endereço vinculado
                             {% endif %}
+
                         </ul>
                     </div>
                 </div>
@@ -163,8 +155,33 @@
                     <ul class="list-group">
                         {% for incident in person.incident.all  %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span class="badge bg-primary rounded-pill">Rua</span>
+                            <span class="badge bg-primary rounded-pill">{{incident.get_type_incident_display}}</span>
                             {{ incident.title|upper }}
+                        </li>
+                        {% endfor %}
+                            <!-- Outros campos de endereço aqui -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% comment %} Relações {% endcomment %}
+
+    <div class="accordion" id="accordionRelation">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTree" >
+                <button id="list-item-4" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTree" aria-expanded="true" aria-controls="collapseTwo">
+                    Relacionamentos
+                </button>
+            </h2>
+            <div id="collapseTree" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionRelation">
+                <div class="accordion-body">
+                    <ul class="list-group">
+                        {% for relation in person.person_relations.all  %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="badge bg-primary rounded-pill">{{relation.get_type_relation_display}}</span>
+                            {{ relation.person.name|upper }}
                         </li>
                         {% endfor %}
                             <!-- Outros campos de endereço aqui -->
@@ -177,12 +194,12 @@
         {% comment %} Acordion para Observações {% endcomment %}
     <div class="accordion" id="accordionComment">
         <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTree" >
-                <button id="list-item-4" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTree" aria-expanded="true" aria-controls="collapseTwo">
+            <h2 class="accordion-header" id="headingFour" >
+                <button id="list-item-5" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
                     Observações
                 </button>
             </h2>
-            <div id="collapseTree" class="accordion-collapse collapse" aria-labelledby="headingTree" data-bs-parent="#accordionComment">
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingTree" data-bs-parent="#accordionComment">
                 <div class="accordion-body">
                     <ul class="list-group">
                         <li class="list-group-item d-flex justify-content-between align-items-center">

@@ -1,5 +1,6 @@
 from django.db import models
 from persons.models import Person
+from .constants_choices import INCIDENT_TYPES
 
 
 class Faction(models.Model):
@@ -13,6 +14,7 @@ class Faction(models.Model):
 
 
 class Incident(models.Model):
+    type_incident = models.CharField(max_length=100, choices=INCIDENT_TYPES, blank=True, null=True)
     title = models.CharField(max_length=255)
     location = models.CharField(max_length=100)
     reported_at = models.DateField(blank=True, null=True)

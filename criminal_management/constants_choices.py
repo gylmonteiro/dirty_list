@@ -1,3 +1,5 @@
+
+
 INCIDENT_TYPES = (('THEFT', 'Roubo'),
                   ('ASSAULT', 'Assalto'),
                   ('VANDALISM', 'Vandalismo'),
@@ -7,4 +9,4 @@ INCIDENT_TYPES = (('THEFT', 'Roubo'),
                   ('HARASSMENT', 'Assédio'),
                   ('DRUG_OFFENSE', 'Delito de drogas'),
                   ('DOMESTIC_VIOLENCE', 'Violência doméstica'),
-                  ('PROPERTY_DAMAGE', 'Danos à propriedade')),
+                  ('PROPERTY_DAMAGE', 'Danos à propriedade'))
