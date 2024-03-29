@@ -1,13 +1,213 @@
-{% if person %}
+{% extends "base/base.html" %}
 
-    <h1>{{person.name}}</h1>
-    <ul>
-        {% for relation in person.person_relations.all  %}
-        <li>{{relation.person.name}} > {{relation.type_relation}}</li>
-        {% endfor %}
+{% load static %}
+
+{% block 'header' %} 
+{% comment %} <link href="{% static "pessoas/css/style.css" %}" rel="stylesheet">   {% endcomment %}
+
+{% endblock 'header' %} 
+
+
+
+
+{% block 'content' %}
+<div class="container mt-3">
+    <div class="row">
+
+        {% comment %} Botões de associação {% endcomment %}
+        <div class="row mt-2 mb-3" >
+        <div class="col-md-3">
+            <form method="GET" action="{% url 'relation-persons-create' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id_person" value={{person.id}}>
+                <button type="submit" class="btn btn-outline-dark btn-block">Relacionar pessoas</button>
+            </form>
+        </div>
+        <div class="col-md-3">
+            <form method="GET" action="{% url 'address-create' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id_person" value={{person.id}}>
+                <button type="submit" class="btn btn-outline-dark btn-block">Associar endereço</button>
+            </form>
+        </div>
+        <div class="col-md-3">
+            <form method="GET" action="{% url 'select-faction' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id_person" value={{person.id}}>
+                <button type="submit" class="btn btn-outline-dark btn-block">Associar a facção</button>
+            </form>
+        </div>
+        <div class="col-md-3">
+            <form method="GET" action="{% url 'registration-incident' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id_person" value={{person.id}}>
+                <button type="submit" class="btn btn-outline-dark btn-block">Registrar ocorrência</button>
+            </form>
+        </div>
+    </div>
+
+
+    {% comment %} Divisão lateral -> foto e outras informações básicas {% endcomment %}
+    <div class="col-4">
+        <div class="container-menu">
+            {% if person.photo %}
+            
+            <img src="{{person.photo.url}}" alt="Foto" class="img-fluid"> 
+            
+            {% else %}
+            <img src="{% static "persons/img/person.png" %}" alt="Foto" class="img-fluid"> 
+            {% endif %}
+                        
+        <div id="list-example" class="list-group mt-2">
+            <a class="list-group-item list-group-item-action" href="#list-item-1">Dados pessoais</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-2">Endereço</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-3">Ocorrências</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-4">Observações</a>
+            </div>
+        </div>
+    </div> 
+
+
+    <div class="col-8">
+        <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+        <h4 id="list-item-1">Dados Pessoais</h4>
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span class="badge bg-primary rounded-pill">Nome</span>
+                    {{person.name|upper}}
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span class="badge bg-primary rounded-pill">CPF</span>
+                    {{person.cpf|default:"CPF não informado"|upper}}
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span class="badge bg-primary rounded-pill">Idade</span>
+                    {{person.age|default:"Data não informada"}} anos
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span class="badge bg-primary rounded-pill">Pai</span>
+                    {% if pessoa.pai %}
+                    <a href="{% url "detalhes_da_pessoa" pessoa.pai.id %}">{{pessoa.pai.nome|upper}}</a>
+                    {% else %}
+                    Sem cadastro
+                    {% endif %}
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span class="badge bg-primary rounded-pill">Mãe</span>
+                    {% if pessoa.mae %}
+                    <a href="{% url "detalhes_da_pessoa" pk=pessoa.mae.id %}">{{pessoa.mae.nome|upper}}</a>
+                    {% else %}
+                    Sem cadastro
+                    {% endif %}
+                </li>
+            </ul>
+
+            {% comment %} Acordion para endereço {% endcomment %}
+        <div class="accordion" id="accordionAddress">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne" >
+                    <button  id="list-item-2" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Endereço
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionAddress">
+                    <div class="accordion-body">
+                        <ul class="list-group">
+                            {% if person.address %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-primary rounded-pill">Rua</span>
+                                    {{ person.address.street|upper }}
+                                </li>
+                                <!-- Outros campos de endereço aqui -->
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-primary rounded-pill">Cidade</span>
+                                    {{person.address.city|upper}}
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-primary rounded-pill">Número</span>
+                                    {{person.address.number|upper}}
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-primary rounded-pill">CEP</span>
+                                    {{person.address.zip_code|upper}}
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-primary rounded-pill">Estado</span>
+                                    {{person.address.state|upper}}
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-primary rounded-pill">Complemento</span>
+                                    {{person.address.complement|upper}}
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-primary rounded-pill">Coordenadas</span>
+                                    {{person.address.coordenadas|upper}}
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} Acordion para Incident {% endcomment %}
+    <div class="accordion" id="accordionIncident">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo" >
+                <button id="list-item-3" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    Ocorrências
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionIncident">
+                <div class="accordion-body">
+                    <ul class="list-group">
+                        {% for incident in person.incident.all  %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="badge bg-primary rounded-pill">Rua</span>
+                            {{ incident.title|upper }}
+                        </li>
+                        {% endfor %}
+                            <!-- Outros campos de endereço aqui -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        {% comment %} Acordion para Observações {% endcomment %}
+    <div class="accordion" id="accordionComment">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTree" >
+                <button id="list-item-4" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTree" aria-expanded="true" aria-controls="collapseTwo">
+                    Observações
+                </button>
+            </h2>
+            <div id="collapseTree" class="accordion-collapse collapse" aria-labelledby="headingTree" data-bs-parent="#accordionComment">
+                <div class="accordion-body">
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ person.comments|default:"Sem informações" }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
         
-    </ul>
+   
+    
+</div>
 
+        
+        </div>
+    </div>
+    </div>
+</div>
+
+
+
+
+{% comment %} 
     <form method="GET" action="{% url 'relation-persons-create' %}">
         {% csrf_token %}
         <input type="hidden" name="id_person" value={{person.id}}>
@@ -32,4 +232,11 @@
         <button type="submit">Registrar ocorrência</button>
     </form>
 
-{% endif %}
+ {% endcomment %}
+
+
+{% endblock 'content' %}
+
+
+
+

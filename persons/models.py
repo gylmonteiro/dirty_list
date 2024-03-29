@@ -1,4 +1,5 @@
 import uuid
+from datetime import date
 from django.db import models
 from .persons_validator import validator_cpf
 from .constants_choices import CHOICE_STATE, CHOICE_RELATION
@@ -23,16 +24,25 @@ class Person(models.Model):
     name = models.CharField(max_length=255)
     number_register = models.UUIDField(unique=True, editable=False, default=uuid.uuid4)
     cpf = models.CharField(max_length=11, blank=True, null=True, validators=[validator_cpf], default='')
+    date_birthday = models.DateField(blank=True, null=True)
     address = models.ForeignKey(Address, null=True, blank=True, related_name='persons', on_delete=models.SET_NULL)
     person_relations = models.ManyToManyField(
         "Relationship", related_name="person_relationships", blank=True
     )
+    comments = models.TextField(blank=True, null=True)
+    class Meta:
+        ordering = ['name']
 
     def __str__(self):
         return f'{self.name} - id: {self.number_register.hex}'
 
-    class Meta:
-        ordering = ['name']
+    def age(self):
+        if self.date_birthday:
+            today = date.today()
+            age_now = today.year - self.date_birthday.year - ((today.month, today.day) < (self.date_birthday.month, self.date_birthday.day))
+            return age_now
+        else:
+            return None
 
 
 class Relationship(models.Model):
