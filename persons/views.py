@@ -2,7 +2,6 @@ from django.http import Http404
 from django.shortcuts import redirect
 from django.views.generic import CreateView, ListView, DetailView
 from persons.models import Person, Relationship, Address
-from criminal_management.models import Incident
 from persons.forms import PersonCreateModelForm, RelationPersonCreateModelForm, AddressCreateModelForm
 # Create your views here.
 
@@ -10,7 +9,7 @@ from persons.forms import PersonCreateModelForm, RelationPersonCreateModelForm, 
 class PersonListView(ListView):
     model = Person
     template_name = 'list_persons.html'
-    context_object_name = 'persons'    
+    context_object_name = 'persons'
 
 
 class PersonCreateView(CreateView):

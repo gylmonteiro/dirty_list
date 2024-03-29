@@ -30,6 +30,7 @@ class Person(models.Model):
         "Relationship", related_name="person_relationships", blank=True
     )
     comments = models.TextField(blank=True, null=True)
+
     class Meta:
         ordering = ['name']
 
