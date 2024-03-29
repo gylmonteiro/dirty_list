@@ -1,11 +1,46 @@
-<form method='POST' action='{% url "relation-persons-create" %}'>
-{% csrf_token %}
-    
-    <table>
-        {{form.as_table}}
-    </table>
-    <input type="hidden" name="id_person" value="{{person_id}}">
-    <button type="submit">Enviar Dados</button>
- 
 
-</form>
+
+{% extends "base/base.html" %}
+{% load static %}
+
+
+
+
+
+{% block 'content' %}
+<div class='container-md mt-4 d-flex justify-content-center align-items-center bg-body-secondary' >
+    <div class='col-md-5'>
+
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Instruções!</strong>
+            <p>Nesta seção é possível relacionar uma pessoa. <br>
+            <ul>
+                <li> <strong>Cancelar</strong> leva você de volta a pessoa</li>
+                <li> <strong>Enviar dados</strong> faz o vínculo com à pessoa</li>
+                <li> Caso queira voltar a lista de pessoas, utilize a <strong>barra de navegação</strong></li>
+            </ul>
+        </div>
+
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <strong>Dados</strong>
+            <p>O que cada campo representa. <br>
+            <ul>
+                <li> <strong>Type relation</strong> Tipo de relação</li>
+                <li> <strong>Person</strong> Pessoa que você deseja relacionar</li>
+                <li> <strong>Observation</strong> Algum tipo de observação que deseja fazer</strong></li>
+            </ul>
+        </div>
+    </div>
+
+     <div class='col-md-6'>
+        <form method='POST' action='{% url "relation-persons-create" %}' class='p-4 bg-body-secondary'>
+        {% csrf_token %}
+            <table class='table'>
+                {{form.as_table}}
+            </table>
+            <button type="submit" class="btn btn-outline-primary btn-block mt-3">Enviar Dados</button>
+            <a href='{% url "person-detail" person_id%}' class='btn btn-warning btn-block mt-3'>Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock 'content' %}

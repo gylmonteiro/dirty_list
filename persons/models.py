@@ -35,7 +35,7 @@ class Person(models.Model):
         ordering = ['name']
 
     def __str__(self):
-        return f'{self.name} - id: {self.number_register.hex}'
+        return f'{self.name}'
 
     def age(self):
         if self.date_birthday:
