@@ -16,7 +16,7 @@ class Faction(models.Model):
 class Incident(models.Model):
     type_incident = models.CharField(max_length=100, choices=INCIDENT_TYPES, blank=True, null=True, verbose_name='Tipo de ocorrência')
     title = models.CharField(max_length=255, verbose_name='Título')
-    location = models.CharField(max_length=100,verbose_name='Local')
+    location = models.CharField(max_length=100, verbose_name='Local')
     reported_at = models.DateField(blank=True, null=True, verbose_name='Data da ocorrência')
     person_relation = models.ForeignKey(Person, blank=True, null=True, related_name='incident', on_delete=models.SET_NULL)
     involved = models.ManyToManyField(Person, blank=True, related_name="involved_persons", verbose_name='Pessoas envolvidas')
