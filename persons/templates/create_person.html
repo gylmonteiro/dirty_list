@@ -7,41 +7,29 @@
 
         <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
             <strong>Instruções!</strong>
-            <p>Nesta seção é possível relacionar uma pessoa. <br>
+            <p>Nesta seção é possível adicionar uma pessoa. <br>
             <ul>
-                <li> <strong>Cancelar</strong> leva você de volta a pessoa</li>
-                <li> <strong>Enviar dados</strong> faz o vínculo com à pessoa</li>
+                <li> <strong>Cancelar</strong> leva você de volta a listagem de pessoas</li>
+                <li> <strong>Cadastrar</strong> Cria uma pessoa</li>
                 <li> Caso queira voltar a lista de pessoas, utilize a <strong>barra de navegação</strong></li>
-            </ul>
-        </div>
-
-        <div class="alert alert-info alert-dismissible fade show" role="alert">
-            <strong>Dados</strong>
-            <p>O que cada campo representa. <br>
-            <ul>
-                <li> <strong>Type relation</strong> Tipo de relação</li>
-                <li> <strong>Person</strong> Pessoa que você deseja relacionar</li>
-                <li> <strong>Observation</strong> Algum tipo de observação que deseja fazer</strong></li>
             </ul>
         </div>
     </div>
 
      <div class='col-md-6'>
-<form method='POST' action='{% url "person-create" %}' class='p-4 bg-body-secondary'>
-{% csrf_token %}
+        <form method='POST' action='{% url "person-create" %}' class='p-4 bg-body-secondary'>
+            {% csrf_token %}
 
-    <table class='table'>
-        {{form.as_table}}
-    </table>
+            <table class='table'>
+                {{form.as_table}}
+            </table>
 
-    <button type="submit" class="btn btn-outline-primary btn-block mt-3">Cadastrar</button>
-    <a href='{% url "person-list"%}' class='btn btn-warning btn-block mt-3'>Cancelar</a>
- 
+            <button type="submit" class="btn btn-outline-primary btn-block mt-3">Cadastrar</button>
+            <a href='{% url "person-list"%}' class='btn btn-warning btn-block mt-3'>Cancelar</a>
+    
 
-    </form>
+        </form>
     </div>
 </div>
 {% endblock 'content' %}
 
-
-{% comment %} form a ser utilizado {% endcomment %}

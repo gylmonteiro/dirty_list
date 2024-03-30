@@ -2,25 +2,36 @@
 {% load static %}
 
 {% block 'content' %}
-<div class="container">    
+<div class="container">
+    
+    <div class="row">
+
+        <div class="row mt-2 mb-3" >
+            <div class="col-md-3">
+                <a  href="{% url "person-create" %}" class="btn btn-outline-dark btn-block">Nova pessoa</a>
+            </div>
+            
+        </div>
+
+    </div>
     {% if persons %}
     <ol class="list-group list-group-numbered">
         {% for person in persons %}
             <a href="{% url 'person-detail' person.id %}">
                 <li class="list-group-item d-flex justify-content-between align-items-start {% cycle 'bg-light' 'bg-white' %}">
                     <div class="ms-2 me-auto">
-                        <div class="fw-bold">{{person.name}}</div>
+                        <div class="fw-bold">{{person.name|upper}}</div>
                         {% if person.members.all %}
                             <img src="{% static 'general/img/member.png' %}"> 
                             {% for member in person.members.all %}
-                                {{member}}
+                                <span class="alert alert-dark" style="padding: 5px; margin: 2px; font-size:0.8rem">{{member|upper}}</span>
                             {% endfor %}  
                         {% endif %}
                         | 
                         {% if person.leaders.all %}
                             <img src="{% static 'general/img/leader.png' %}"> 
                             {% for leader in person.leaders.all %}
-                                {{leader}}
+                                 <span class="alert alert-danger" style="padding: 5px; margin: 2px; font-size:0.8rem">{{leader|upper}}</span>
                             {% endfor %}
                         {% endif %}
                     </div>

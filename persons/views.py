@@ -1,4 +1,5 @@
 from django.http import Http404
+from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.views.generic import CreateView, ListView, DetailView
 from persons.models import Person, Relationship, Address
@@ -35,12 +36,15 @@ class RelationPersonCreateView(CreateView):
     model = Relationship
     form_class = RelationPersonCreateModelForm
     template_name = 'create_relation.html'
-    success_url = '/persons/'
+    # success_url = '/persons/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         person_id = self.request.GET.get("id_person")
+        person = Person.objects.get(pk=person_id)
         context["person_id"] = person_id
+        context["person"] = person
+
         return context
 
     def form_valid(self, form):
@@ -50,12 +54,16 @@ class RelationPersonCreateView(CreateView):
         person.person_relations.add(relationship)
         return super().form_valid(form)
 
+    def get_success_url(self) -> str:
+        person_id = self.request.POST.get('id_person')
+        return reverse_lazy("person-detail", kwargs={'pk': person_id})
+
 
 class AddressCreateView(CreateView):
     model = Address
     form_class = AddressCreateModelForm
     template_name = 'create_address.html'
-    success_url = '/persons/'
+    # success_url = '/persons/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -71,3 +79,7 @@ class AddressCreateView(CreateView):
         person.address = address
         person.save()
         return super().form_valid(form)
+
+    def get_success_url(self):
+        person_id = self.request.POST.get("person")
+        return reverse_lazy("person-detail", kwargs={"pk": person_id})

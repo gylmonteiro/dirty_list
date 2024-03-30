@@ -15,4 +15,4 @@ class RelationshipAdmin(admin.ModelAdmin):
 
 @admin.register(Address)
 class AddressAdmin(admin.ModelAdmin):
-    list_display = ('state', 'city', 'street', 'number', 'distric', 'zip_code')
+    list_display = ('state', 'city', 'street', 'number', 'district', 'zip_code')

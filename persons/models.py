@@ -6,12 +6,13 @@ from .constants_choices import CHOICE_STATE, CHOICE_RELATION
 
 
 class Address(models.Model):
-    state = models.CharField(max_length=2, choices=CHOICE_STATE)
-    city = models.CharField(max_length=255)
-    street = models.CharField(max_length=255)
-    number = models.CharField(max_length=100)
-    distric = models.CharField(max_length=255, blank=True, null=True)
-    zip_code = models.CharField(max_length=100, blank=True, null=True)
+    state = models.CharField(max_length=2, choices=CHOICE_STATE, verbose_name="Estado")
+    city = models.CharField(max_length=255, verbose_name="Cidade")
+    street = models.CharField(max_length=255, verbose_name="Rua")
+    number = models.CharField(max_length=100, verbose_name="Número")
+    district = models.CharField(max_length=255, blank=True, null=True, verbose_name="Bairro")
+    zip_code = models.CharField(max_length=100, blank=True, null=True, verbose_name="CEP")
+    reference_point = models.TextField(null=True, blank=True, verbose_name="Ponto de Referência")
 
     def __str__(self):
         return f'{self.state} | {self.city} | {self.street}'
@@ -21,11 +22,12 @@ class Address(models.Model):
 
 
 class Person(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, verbose_name="Nome Completo")
+    nickname = models.CharField(max_length=255, verbose_name="Alcunha | Apelido", null=True, blank=True)
     number_register = models.UUIDField(unique=True, editable=False, default=uuid.uuid4)
     cpf = models.CharField(max_length=11, blank=True, null=True, validators=[validator_cpf], default='')
-    date_birthday = models.DateField(blank=True, null=True)
-    address = models.ForeignKey(Address, null=True, blank=True, related_name='persons', on_delete=models.SET_NULL)
+    date_birthday = models.DateField(blank=True, null=True, verbose_name="Data de Nascimento")
+    address = models.ForeignKey(Address, null=True, blank=True, related_name='persons', on_delete=models.SET_NULL, verbose_name="Endereço")
     person_relations = models.ManyToManyField(
         "Relationship", related_name="person_relationships", blank=True
     )
@@ -47,13 +49,14 @@ class Person(models.Model):
 
 
 class Relationship(models.Model):
-    type_relation = models.CharField(max_length=30, choices=CHOICE_RELATION)
+    type_relation = models.CharField(max_length=30, choices=CHOICE_RELATION, verbose_name="Tipo da relação")
     person = models.ForeignKey(
         Person,
         on_delete=models.PROTECT,
         related_name="person_relation",
+        verbose_name="Pessoa"
     )
-    observation = models.TextField(blank=True, null=True)
+    observation = models.TextField(blank=True, null=True, verbose_name="Observação")
 
     def __str__(self):
         return f'{self.person} é {self.type_relation}'
