@@ -1,11 +1,15 @@
 from django.http import Http404
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from django.views.generic import CreateView, ListView, DetailView
+from django.views.generic import CreateView, ListView, DetailView,TemplateView
 from persons.models import Person, Relationship, Address
 from persons.forms import PersonCreateModelForm, RelationPersonCreateModelForm, AddressCreateModelForm
 # Create your views here.
 
+
+
+class HomeView(TemplateView):
+    template_name = 'home.html'
 
 class PersonListView(ListView):
     model = Person

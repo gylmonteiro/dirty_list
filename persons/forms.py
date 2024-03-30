@@ -4,7 +4,6 @@ from .models import Person, Relationship, Address
 
 class PersonCreateModelForm(forms.ModelForm):
 
-   
     class Meta:
         model = Person
         fields = ['name', 'nickname', 'date_birthday', 'cpf']
@@ -23,9 +22,9 @@ class RelationPersonCreateModelForm(forms.ModelForm):
         model = Relationship
         fields = ['type_relation', 'person', 'observation']
         widgets = {
-            'type_relation':forms.Select(attrs={'class':'form-select'}),
-            'person':forms.Select(attrs={'class':'form-select'}),
-            'observation':forms.Textarea(attrs={'class':'form-control'})
+            'type_relation': forms.Select(attrs={'class': 'form-select'}),
+            'person': forms.Select(attrs={'class': 'form-select'}),
+            'observation': forms.Textarea(attrs={'class': 'form-control'})
         }
 
 
@@ -40,5 +39,5 @@ class AddressCreateModelForm(forms.ModelForm):
             "number": forms.TextInput(attrs={"class": "form-control"}),
             "district": forms.TextInput(attrs={"class": "form-control"}),
             "zip_code": forms.TextInput(attrs={"class": "form-control"}),
-            "reference_point": forms.Textarea(attrs={"class": "form-control", "rows":"4"}),
+            "reference_point": forms.Textarea(attrs={"class": "form-control", "rows": "4"}),
         }

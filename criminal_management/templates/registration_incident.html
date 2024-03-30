@@ -1,40 +1,40 @@
-<h1> Página para registrar os incidentes </h1>
+{% extends "base/base.html" %}
+{% block 'content' %}
+<div class='container-md mt-4 d-flex justify-content-center align-items-center bg-body-secondary' >
+    <div class='col-md-5'>
+        
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            
+            <p>Registrar uma ocorrência para <strong>{{person.name}}</strong> e envolvidos <br>
+          
+        </div>
+        
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>Instruções!</strong>
+          <p>Nesta seção é possível registrar uma ocorrência. <br>
+            <ul>
+                <li> <strong>Cancelar</strong> leva você de volta a pessoa</li>
+                <li> <strong>Enviar dados</strong> faz o vínculo com à pessoa</li>
+                <li> Caso queira voltar a lista de pessoas, utilize a <strong>barra de navegação</strong></li>
+              </ul>
+            </div>
 
-   <form method='POST' action='{% url "registration-incident" %}'>
-    {% csrf_token %}
+          </div>
+          
+          <div class='col-md-6'>
+            <form method='POST' action='{% url "registration-incident" %}' class='p-4 bg-body-secondary'>
+        {% csrf_token %}
+        <table class='table'>
+                {{form.as_table}}
+            </table>
+          
+            <button type="submit" class="btn btn-outline-primary btn-block mt-3">Registrar</button>
+            <input type="hidden" name="person" value={{person.id}}>
+            <a href='{% url "person-detail" person.id%}' class='btn btn-warning btn-block mt-3'>Cancelar</a>
+          </form>
+        </div>
+</div>
 
-      <table>
-          {{form.as_table}}
-      </table>
-      <input type="hidden" name="person" value={{person.id}}>
 
-      <input type='submit' value='Registrar'>
-    
-    </form> 
+{% endblock 'content' %}
 
-<hr>
-
-
-{% comment %} Script abaixo renderiza um campo dinâmico para pesquisar {% endcomment %}
-
-{% comment %} <hr>
-<select id="selectBox" class="js-example-basic-single" style="width: 200px;">
-  <option value="1">Option 1</option>
-  <option value="2">Option 2</option>
-  <option value="3">Option 3</option>
-  <option value="4">Option 4</option>
-  <option value="5">Option 5</option>
-  <option value="6">Option 6</option>
-  <option value="7">Option 7</option>
-  <option value="8">Option 8</option>
-  <option value="9">Option 9</option>
-  <option value="10">Option 10</option>
-</select>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.0/dist/js/select2.min.js"></script>
-<script>
-$(document).ready(function() {
-  $('.js-example-basic-single').select2();
-});
-</script> {% endcomment %}
