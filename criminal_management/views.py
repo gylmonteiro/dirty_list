@@ -1,5 +1,6 @@
 from django.shortcuts import redirect
 from django.views import generic
+from django.urls import reverse_lazy
 from .models import Faction, Incident
 from persons.models import Person
 from .forms import FactionForm, IncidentForm
@@ -63,14 +64,17 @@ class RegisterIncident(generic.CreateView):
         return super().form_valid(form)
 
 
-'''
-class FactionUpdateView(generic.View):
+class IncidentDetailView(generic.DetailView):
+    model = Incident
+    template_name = 'incident_detail.html'
+    context_object_name = 'incident'
 
-    def post(self,request, *args, **kwargs):
-        faction_id = request.POST.get('faction')
-        person_id = request.POST.get('person')
-        faction = Faction.objects.get(pk=faction_id)
-        person = Person.objects.get(pk=person_id)
-        faction.member.add(person)
-        return redirect("person-list")
-'''
+class IncidentDeleteView(generic.DeleteView):
+    model = Incident
+    # template_name = "incident_detail.html"
+    
+    def get_success_url(self):
+
+        return reverse_lazy(
+            "person-detail", kwargs={"pk": self.object.person_relation.id}
+        )

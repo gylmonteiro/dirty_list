@@ -1,0 +1,80 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block 'content' %}
+{% comment %} Início do modal {% endcomment %}
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza de que deseja excluir esta ocorrência?
+      </div>
+      <div class="modal-footer">
+        <form method="post" action='{% url "delete-incident" incident.id %}'>
+        {% csrf_token %}
+        <div class="buttons-container">
+          <button type="submit" class="btn btn-danger">Deletar Ocorrência</button>
+          <a href="{% url 'person-detail' incident.person_relation.id  %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% comment %} Fim do modal {% endcomment %}
+
+
+
+
+
+<div class="accordion" id="accordionIncident">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne" >
+            <button  id="list-item-1" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Ocorrência: {{incident.get_type_incident_display}} | {% if incident.reported_at %}{{incident.reported_at}} {% else %} Data não informada{% endif %}
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionIncident">
+            <div class="accordion-body">
+                <ul class="list-group">
+                    
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="badge bg-primary rounded-pill">Título</span>
+                        {{ incident.title }}
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="badge bg-primary rounded-pill">Local da ocorrência</span>
+                        {{ incident.location }}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="badge bg-primary rounded-pill">Principal envolvido</span>
+                        {{ incident.person_relation }}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="badge bg-primary rounded-pill">Outros envolvidos</span>
+                        {% for  involved in incident.involved.all %}
+                            <a href='{% url "person-detail" involved.id %}'><span class='btn btn-light'>{{ involved.name }}</span></a>
+                        {% endfor %}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="badge bg-primary rounded-pill">Detalhes da ocorrência</span>
+                        {{ incident.details }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class='container'>
+
+        <a href="#" class="btn btn-outline-danger btn-block" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Deletar</a>        
+        <a class="btn btn-outline-primary btn-block m-lg-3">Editar</a>
+        <a href='{% url "person-detail" incident.person_relation.id%}' class="btn btn-outline-warning btn-block">Voltar</a>
+        </div>
+    </div>
+</div>
+
+{% endblock 'content' %}
