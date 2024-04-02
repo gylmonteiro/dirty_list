@@ -154,10 +154,24 @@
                 <div class="accordion-body">
                     <ul class="list-group">
                         {% for incident in person.incident.all  %}
-                        <a href='{% url "detail-incident" incident.id %}'><li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span class="badge bg-primary rounded-pill">{{incident.get_type_incident_display}}</span>
-                            {{ incident.title|upper }}
-                        </li></a>
+                            <a href='{% url "detail-incident" incident.id %}'>
+                                <li class="list-group-item d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-primary rounded-pill">{{incident.get_type_incident_display}}</span>
+                                    {{ incident.title|upper }}
+                                    <span class="badge bg-secondary rounded-pill">Principal</span>
+                                </li>
+                            </a>
+                            
+                        {% endfor %}
+                        <hr class="my-4 border-primaru">
+                        {% for involved in involved_incidents.all  %}
+                            <a href='{% url "detail-incident" involved.id %}'>
+                                <li class="list-group-item d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-primary rounded-pill">{{involved.get_type_incident_display}}</span>
+                                    {{ involved.title|upper }}
+                                    <span class="badge bg-secondary rounded-pill">Envolvido</span>
+                                </li>
+                            </a>                        
                         {% endfor %}
                             <!-- Outros campos de endereço aqui -->
                     </ul>

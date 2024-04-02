@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.views.generic import CreateView, ListView, DetailView, TemplateView
 from persons.models import Person, Relationship, Address
+from criminal_management.models import Incident
 from persons.forms import PersonCreateModelForm, RelationPersonCreateModelForm, AddressCreateModelForm
 # Create your views here.
 
@@ -28,6 +29,13 @@ class PersonDetailView(DetailView):
     model = Person
     template_name = 'detail_person.html'
     context_object_name = 'person'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        person = self.object
+        involved_incidents = Incident.objects.filter(involved = person)
+        context["involved_incidents"] = involved_incidents
+        return context
 
     def dispatch(self, request, *args, **kwargs):
         try:

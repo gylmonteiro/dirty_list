@@ -69,12 +69,22 @@ class IncidentDetailView(generic.DetailView):
     template_name = 'incident_detail.html'
     context_object_name = 'incident'
 
+
 class IncidentDeleteView(generic.DeleteView):
     model = Incident
-    # template_name = "incident_detail.html"
-    
-    def get_success_url(self):
 
+    def get_success_url(self):
+        return reverse_lazy(
+            "person-detail", kwargs={"pk": self.object.person_relation.id}
+        )
+
+
+class IncidentUpdateView(generic.UpdateView):
+    model = Incident
+    form_class = IncidentForm
+    template_name = 'update_incident.html'
+    context_object_name = 'incident'
+    def get_success_url(self):
         return reverse_lazy(
             "person-detail", kwargs={"pk": self.object.person_relation.id}
         )

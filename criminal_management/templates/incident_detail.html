@@ -71,7 +71,7 @@
         <div class='container'>
 
         <a href="#" class="btn btn-outline-danger btn-block" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Deletar</a>        
-        <a class="btn btn-outline-primary btn-block m-lg-3">Editar</a>
+        <a href='{% url "update-incident" incident.id %}' class="btn btn-outline-primary btn-block m-lg-3">Editar</a>
         <a href='{% url "person-detail" incident.person_relation.id%}' class="btn btn-outline-warning btn-block">Voltar</a>
         </div>
     </div>
