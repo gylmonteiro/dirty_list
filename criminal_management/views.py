@@ -84,6 +84,7 @@ class IncidentUpdateView(generic.UpdateView):
     form_class = IncidentForm
     template_name = 'update_incident.html'
     context_object_name = 'incident'
+
     def get_success_url(self):
         return reverse_lazy(
             "person-detail", kwargs={"pk": self.object.person_relation.id}

@@ -33,7 +33,7 @@ class PersonDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         person = self.object
-        involved_incidents = Incident.objects.filter(involved = person)
+        involved_incidents = Incident.objects.filter(involved=person)
         context["involved_incidents"] = involved_incidents
         return context
 
