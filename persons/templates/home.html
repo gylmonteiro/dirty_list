@@ -10,7 +10,19 @@
             <p class="lead text-center">O sistema "<strong>dirty list</strong>" é uma ferramenta poderosa para cadastrar, listar e relacionar ocorrências criminais...</p>
         </div>
     </div>
-    <div class="row mt-5">
+    <hr>
+    <div class='row'>
+        <h2 class="text-success mb-4">Gráfico | <span class="lead text-center">Ocorrências registradas<span></h2>
+    </div>
+    <div class="col-md-10 offset-md-5">
+  
+
+        <canvas class="w-25 h-25" id="grafico_ocorrencias"></canvas>
+
+    </div>
+
+   
+     <div class="row mt-5">
         <div class="col-md-3">
             <div class="card border-info-subtle">
                 <div class="card-body text-center " >
@@ -29,6 +41,30 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
+    
 </div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('grafico_ocorrencias');
+      
+        new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: JSON.parse('{{labels|escapejs}}'),
+            datasets: [{
+              label: 'Qtd',
+              data: JSON.parse('{{values_labels|escapejs}}'),
+              borderWidth: 1
+            }]
+          },
+          
+        });
+    </script>
+
+
 {% endblock 'content' %}

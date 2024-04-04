@@ -1,3 +1,4 @@
+import json
 from django.http import Http404
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
@@ -10,6 +11,20 @@ from persons.forms import PersonCreateModelForm, RelationPersonCreateModelForm, 
 
 class HomeView(TemplateView):
     template_name = 'home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        incident = Incident.objects.all()
+        labels = []
+        values_labels = []
+        for label in incident:
+            if label.get_type_incident_display() not in labels:
+                labels.append(label.get_type_incident_display())
+                values_labels.append(Incident.objects.filter(type_incident=label.type_incident).count())
+        
+        context["values_labels"] = json.dumps(values_labels)
+        context["labels"] = json.dumps(labels) 
+        return context
 
 
 class PersonListView(ListView):
