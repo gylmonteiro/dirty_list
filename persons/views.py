@@ -22,11 +22,10 @@ class HomeView(TemplateView):
             if label.get_type_incident_display() not in labels:
                 labels.append(label.get_type_incident_display())
                 values_labels.append(Incident.objects.filter(type_incident=label.type_incident).count())
-        
         context['factions'] = factions
         context['incident'] = incident
         context["values_labels"] = json.dumps(values_labels)
-        context["labels"] = json.dumps(labels) 
+        context["labels"] = json.dumps(labels)
         return context
 
 
