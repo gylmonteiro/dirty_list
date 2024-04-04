@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.views.generic import CreateView, ListView, DetailView, TemplateView
 from persons.models import Person, Relationship, Address
-from criminal_management.models import Incident
+from criminal_management.models import Incident, Faction
 from persons.forms import PersonCreateModelForm, RelationPersonCreateModelForm, AddressCreateModelForm
 # Create your views here.
 
@@ -15,6 +15,7 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         incident = Incident.objects.all()
+        factions = Faction.objects.all()
         labels = []
         values_labels = []
         for label in incident:
@@ -22,6 +23,8 @@ class HomeView(TemplateView):
                 labels.append(label.get_type_incident_display())
                 values_labels.append(Incident.objects.filter(type_incident=label.type_incident).count())
         
+        context['factions'] = factions
+        context['incident'] = incident
         context["values_labels"] = json.dumps(values_labels)
         context["labels"] = json.dumps(labels) 
         return context
