@@ -14,6 +14,11 @@ class FactionCreateView(generic.CreateView):
     success_url = '/persons/'
 
 
+class FactionListView(generic.ListView):
+    model = Faction
+    template_name = 'list_factions.html'
+    context_object_name = 'factions'
+
 class FactionSelectView(generic.TemplateView):
     template_name = 'select_factions.html'
 

@@ -1,0 +1,44 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block 'content' %}
+<div class="container">
+    
+    <div class="row">
+
+        <div class="row mt-2 mb-3" >
+            <div class="col-md-3">
+                <a  href="{% url "faction-create" %}" class="btn btn-outline-dark btn-block">Nova facção</a>
+            </div>
+            
+        </div>
+
+    </div>
+    {% if factions %}
+    <ol class="list-group list-group-numbered">
+        {% for faction in factions %}
+            <a href="">
+                <li class="list-group-item d-flex justify-content-between align-items-start {% cycle 'bg-light' 'bg-white' %}">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">{{faction.name|upper}}</div>
+                        <span> Facção criminosa </span>
+                    </div>
+                    {% if person.incident.all %}
+                    <span class="badge bg-primary rounded-pill">0</span>
+                    {% else %}
+                    <span class="badge bg-primary rounded-pill">0</span>
+
+                    {% endif %}
+                </li>
+            </a>
+        {% endfor %}
+    </ol>
+    {% else %}
+    <h1>Nenhuma facção cadastrada </h1>
+    {% endif %}
+</div>
+
+
+
+
+{% endblock 'content' %}
