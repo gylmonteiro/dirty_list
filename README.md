@@ -6,10 +6,11 @@
 
 > 🚧 Projeto em fase de construção final 🚧
 
-# 🔨 Funcionalidades do projeto
+## 🔨 Funcionalidades do projeto
 - `Cadastro de entes`: Cadastro de pessoas, com dados pessoais e endereços; Cadastro de grupos de organizações (exemplo: criminais :rotating_light:)
 - `Registro de ocorrências`: Nesta funcionalidade é possível registra para pessoas e organizações ocorrências de variados tipos;
 - `Relacionamentos`: Possibilidade de fazer ligações entre pessoas e organizações; 
 - `Dashboard`: Principais dados voltados para visualização rápida de números e percentuais que dão suporte a uma ánalise de dados com facilidade;
 
-  
+## ⚒️ Rodar o projeto
+** 
