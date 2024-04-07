@@ -11,7 +11,7 @@ class FactionCreateView(generic.CreateView):
     model = Faction
     form_class = FactionForm
     template_name = 'create_faction.html'
-    success_url = '/persons/'
+    success_url = '/criminals/factions/'
 
 
 class FactionListView(generic.ListView):
@@ -44,6 +44,12 @@ class FactionSelectView(generic.TemplateView):
         else:
             faction.member.add(person)
             return redirect("person-list")
+
+
+class FactionDetailView(generic.DetailView):
+    model = Faction
+    template_name = 'detail_faction.html'
+    context_object_name = 'faction'
 
 
 class RegisterIncident(generic.CreateView):

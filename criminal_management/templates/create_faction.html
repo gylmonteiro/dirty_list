@@ -1,3 +1,40 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block 'content' %}
+<div class='container-md mt-4 d-flex justify-content-center align-items-center bg-body-secondary' >
+    <div class='col-md-5'>
+
+        <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+            <strong>Instruções!</strong>
+            <p>Nesta seção é possível criar uma Facção. <br>
+            <ul>
+                <li> <strong>Cancelar</strong> leva você de volta a listagem de Facções</li>
+                <li> <strong>Cadastrar</strong> Cria uma Facção</li>
+                <li> Caso queira voltar a lista de Facções, utilize a <strong>barra de navegação</strong></li>
+            </ul>
+        </div>
+    </div>
+
+     <div class='col-md-6'>
+        <form method='POST' action='{% url "faction-create" %}' class='p-4 bg-body-secondary'>
+            {% csrf_token %}
+
+            <table class='table'>
+                {{form.as_table}}
+            </table>
+
+            <button type="submit" class="btn btn-outline-primary btn-block mt-3">Cadastrar</button>
+            <a href='{% url "faction-list"%}' class='btn btn-warning btn-block mt-3'>Cancelar</a>
+    
+
+        </form>
+    </div>
+</div>
+{% endblock 'content' %}
+
+
+
 
 <form method='POST' action='{% url "faction-create" %}'>
 {% csrf_token %}

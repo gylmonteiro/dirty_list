@@ -3,7 +3,8 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.FactionListView.as_view(), name='faction-list'),
+    path('factions/', views.FactionListView.as_view(), name='faction-list'),
+    path('factions/<int:pk>', views.FactionDetailView.as_view(), name='faction-detail'),
     path('create/', views.FactionCreateView.as_view(), name='faction-create'),
     path('select/', views.FactionSelectView.as_view(), name='select-faction'),
     path('add_member/', views.FactionSelectView.as_view(), name='add-member'),

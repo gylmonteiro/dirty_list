@@ -4,10 +4,10 @@ from .constants_choices import INCIDENT_TYPES
 
 
 class Faction(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    member = models.ManyToManyField(Person, related_name='members', blank=True)
-    leaders = models.ManyToManyField(Person, blank=True, related_name='leaders')
-    details = models.TextField(blank=True, null=True)
+    name = models.CharField(max_length=255, unique=True, verbose_name='Nome')
+    member = models.ManyToManyField(Person, related_name='members', blank=True, verbose_name='Membros')
+    leaders = models.ManyToManyField(Person, blank=True, related_name='leaders', verbose_name='Líderes')
+    details = models.TextField(blank=True, null=True, verbose_name="Detalhes")
 
     def __str__(self):
         return self.name

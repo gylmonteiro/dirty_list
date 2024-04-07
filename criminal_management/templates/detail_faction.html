@@ -1,0 +1,79 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+
+{% block 'content' %}
+
+<div class='container mt-3'>
+
+    
+
+    {% comment %} Fim dos botãos de associação {% endcomment %}
+
+    {% comment %} Menu lateral de navegação {% endcomment %}
+
+    <div class='container'>
+        <div class='row justify-content-center align-items-center'>
+            <div class="col-4">
+                <div class="container-menu">
+                    {% if faction.photo %}
+                        <img src="{{faction.photo.url}}" alt="Foto" class="img-fluid"> 
+                    {% else %}
+                        <img src="{% static "persons/img/person.png" %}" alt="Foto" class="img-fluid"> 
+                    {% endif %}
+                </div>
+            </div> 
+
+            <div class="col-6 d-flex justify-content-center align-items-center">
+                {% comment %} Botões de associação {% endcomment %}
+                <div class="row mt-2 mb-3 justify-content-center">
+                    <div>
+                        <form method="GET" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="id_person" value={{faction.id}}>
+                            <button type="submit" class="btn btn-outline-dark btn-block">Editar dados da organização</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% comment %} Fim do menu de navegação {% endcomment %}
+
+    {% comment %} Inicio dos acrodions {% endcomment %}
+    <div class='row mt-3'>
+            <div class="accordion" id="accordionMember">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne" >
+                        <button id="list-item-1" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        <strong>Membros</strong> | {{faction.member.count}}
+                    </button>
+                    </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionMember">
+                                <div class="accordion-body">
+                                    <ul class="list-group">
+                                        {% for member in faction.member.all  %}
+                                            <a href=''>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center mb-3">
+                                                    <span class="badge bg-primary rounded-pill">{{incident.get_type_incident_display}}</span>
+                                                    {{ member.name.title|upper }}
+                                                    <span class="badge bg-secondary rounded-pill">Principal</span>
+                                                </li>
+                                            </a>
+                                            
+                                        {% endfor %}
+                                        <!-- Outros campos de endereço aqui -->
+                                    </ul>
+                                </div>
+                        </div>
+                </div>
+            </div>
+
+    </div>
+
+     
+</div>
+
+
+{% endblock 'content' %}

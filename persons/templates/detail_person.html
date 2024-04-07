@@ -8,15 +8,13 @@
 {% endblock 'header' %} 
 
 
-
-
 {% block 'content' %}
 <div class="container mt-3">
     <div class="row">
 
         {% comment %} Botões de associação {% endcomment %}
-        <div class="row mt-2 mb-3" >
-            <div class="col-md-3">
+        <div class="row mt-2 mb-3 justify-content-center" >
+            <div class="col-md-2">
                 <form method="GET" action="{% url 'relation-persons-create' %}">
                     {% csrf_token %}
                     <input type="hidden" name="id_person" value={{person.id}}>
@@ -24,25 +22,33 @@
                     <button type="submit" class="btn btn-outline-dark btn-block">Relacionar pessoas</button>
                 </form>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <form method="GET" action="{% url 'address-create' %}">
                     {% csrf_token %}
                     <input type="hidden" name="id_person" value={{person.id}}>
                     <button type="submit" class="btn btn-outline-dark btn-block">Associar endereço</button>
                 </form>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <form method="GET" action="{% url 'select-faction' %}">
                     {% csrf_token %}
                     <input type="hidden" name="id_person" value={{person.id}}>
                     <button type="submit" class="btn btn-outline-dark btn-block">Associar a facção</button>
                 </form>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <form method="GET" action="{% url 'registration-incident' %}">
                     {% csrf_token %}
                     <input type="hidden" name="id_person" value={{person.id}}>
                     <button type="submit" class="btn btn-outline-dark btn-block">Registrar ocorrência</button>
+                </form>
+            </div>
+
+            <div class="col-md-3">
+                <form method="GET" action="{% url 'person-update' person.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="id_person" value={{person.id}}>
+                    <button type="submit" class="btn btn-outline-dark btn-block">Editar dados pessoais</button>
                 </form>
             </div>
     </div>
@@ -58,12 +64,12 @@
             <img src="{% static "persons/img/person.png" %}" alt="Foto" class="img-fluid"> 
             {% endif %}
                         
-        <div id="list-example" class="list-group mt-2">
-            <a class="list-group-item list-group-item-action" href="#list-item-1">Dados pessoais</a>
-            <a class="list-group-item list-group-item-action" href="#list-item-2">Endereço</a>
-            <a class="list-group-item list-group-item-action" href="#list-item-3">Ocorrências</a>
-            <a class="list-group-item list-group-item-action" href="#list-item-4">Relacionamentos</a>
-            <a class="list-group-item list-group-item-action" href="#list-item-5">Observações</a>
+            <div id="list-example" class="list-group mt-2">
+                <a class="list-group-item list-group-item-action" href="#list-item-1">Dados pessoais</a>
+                <a class="list-group-item list-group-item-action" href="#list-item-2">Endereço</a>
+                <a class="list-group-item list-group-item-action" href="#list-item-3">Ocorrências</a>
+                <a class="list-group-item list-group-item-action" href="#list-item-4">Relacionamentos</a>
+                <a class="list-group-item list-group-item-action" href="#list-item-5">Observações</a>
             </div>
         </div>
     </div> 
@@ -71,11 +77,15 @@
 
     <div class="col-8">
         <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
-        <h4 id="list-item-1">Dados Pessoais</h4>
+            <h4 id="list-item-1">Dados Pessoais</h4>
             <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="badge bg-primary rounded-pill">Nome</span>
                     {{person.name|upper}}
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span class="badge bg-primary rounded-pill">Alcunha</span>
+                    {{person.nickname|default:"Data não informada"}}
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="badge bg-primary rounded-pill">CPF</span>
@@ -143,42 +153,42 @@
         </div>
 
         {% comment %} Acordion para Incident {% endcomment %}
-    <div class="accordion" id="accordionIncident">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo" >
-                <button id="list-item-3" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+        <div class="accordion" id="accordionIncident">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo" >
+                    <button id="list-item-3" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                     Ocorrências
                 </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionIncident">
-                <div class="accordion-body">
-                    <ul class="list-group">
-                        {% for incident in person.incident.all  %}
-                            <a href='{% url "detail-incident" incident.id %}'>
-                                <li class="list-group-item d-flex justify-content-between align-items-center mb-3">
-                                    <span class="badge bg-primary rounded-pill">{{incident.get_type_incident_display}}</span>
-                                    {{ incident.title|upper }}
-                                    <span class="badge bg-secondary rounded-pill">Principal</span>
-                                </li>
-                            </a>
-                            
-                        {% endfor %}
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionIncident">
+                    <div class="accordion-body">
+                        <ul class="list-group">
+                            {% for incident in person.incident.all  %}
+                                <a href='{% url "detail-incident" incident.id %}'>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center mb-3">
+                                        <span class="badge bg-primary rounded-pill">{{incident.get_type_incident_display}}</span>
+                                        {{ incident.title|upper }}
+                                        <span class="badge bg-secondary rounded-pill">Principal</span>
+                                    </li>
+                                </a>
+                                
+                            {% endfor %}
                         <hr class="my-4 border-primaru">
-                        {% for involved in involved_incidents.all  %}
-                            <a href='{% url "detail-incident" involved.id %}'>
-                                <li class="list-group-item d-flex justify-content-between align-items-center mb-3">
-                                    <span class="badge bg-primary rounded-pill">{{involved.get_type_incident_display}}</span>
-                                    {{ involved.title|upper }}
-                                    <span class="badge bg-secondary rounded-pill">Envolvido</span>
-                                </li>
-                            </a>                        
-                        {% endfor %}
+                            {% for involved in involved_incidents.all  %}
+                                <a href='{% url "detail-incident" involved.id %}'>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center mb-3">
+                                        <span class="badge bg-primary rounded-pill">{{involved.get_type_incident_display}}</span>
+                                        {{ involved.title|upper }}
+                                        <span class="badge bg-secondary rounded-pill">Envolvido</span>
+                                    </li>
+                                </a>                        
+                            {% endfor %}
                             <!-- Outros campos de endereço aqui -->
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
     {% comment %} Relações {% endcomment %}
 
@@ -236,34 +246,6 @@
 </div>
 
 
-
-
-{% comment %} 
-    <form method="GET" action="{% url 'relation-persons-create' %}">
-        {% csrf_token %}
-        <input type="hidden" name="id_person" value={{person.id}}>
-        <button type="submit">Relacionar pessoas</button>
-    </form>
-
-    <form method="GET" action="{% url 'address-create' %}">
-        {% csrf_token %}
-        <input type="hidden" name="id_person" value={{person.id}}>
-        <button type="submit">Associar endereço</button>
-    </form>
-
-    <form method="GET" action="{% url 'select-faction' %}">
-        {% csrf_token %}
-        <input type="hidden" name="id_person" value={{person.id}}>
-        <button type="submit">Associar a facção</button>
-    </form>
-
-     <form method="GET" action="{% url 'registration-incident' %}">
-        {% csrf_token %}
-        <input type="hidden" name="id_person" value={{person.id}}>
-        <button type="submit">Registrar ocorrência</button>
-    </form>
-
- {% endcomment %}
 
 
 {% endblock 'content' %}

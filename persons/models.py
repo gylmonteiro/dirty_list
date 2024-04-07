@@ -52,9 +52,10 @@ class Relationship(models.Model):
     type_relation = models.CharField(max_length=30, choices=CHOICE_RELATION, verbose_name="Tipo da relação")
     person = models.ForeignKey(
         Person,
-        on_delete=models.PROTECT,
+        on_delete=models.SET_NULL,
         related_name="person_relation",
-        verbose_name="Pessoa"
+        verbose_name="Pessoa",
+        null=True
     )
     observation = models.TextField(blank=True, null=True, verbose_name="Observação")
 

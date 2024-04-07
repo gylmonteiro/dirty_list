@@ -2,14 +2,14 @@ import json
 from django.http import Http404
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from django.views.generic import CreateView, ListView, DetailView, TemplateView
+from django.views import generic
 from persons.models import Person, Relationship, Address
 from criminal_management.models import Incident, Faction
 from persons.forms import PersonCreateModelForm, RelationPersonCreateModelForm, AddressCreateModelForm
 # Create your views here.
 
 
-class HomeView(TemplateView):
+class HomeView(generic.TemplateView):
     template_name = 'home.html'
 
     def get_context_data(self, **kwargs):
@@ -29,20 +29,28 @@ class HomeView(TemplateView):
         return context
 
 
-class PersonListView(ListView):
+class PersonListView(generic.ListView):
     model = Person
     template_name = 'list_persons.html'
     context_object_name = 'persons'
 
 
-class PersonCreateView(CreateView):
+class PersonCreateView(generic.CreateView):
     model = Person
     form_class = PersonCreateModelForm
     template_name = 'create_person.html'
     success_url = '/persons/'
 
 
-class PersonDetailView(DetailView):
+class PersonUpdateView(generic.UpdateView):
+    model = Person
+    form_class = PersonCreateModelForm
+    template_name = 'update_person.html'
+    success_url = '/persons/'
+    context_object_name = 'person'
+
+
+class PersonDetailView(generic.DetailView):
     model = Person
     template_name = 'detail_person.html'
     context_object_name = 'person'
@@ -61,7 +69,11 @@ class PersonDetailView(DetailView):
             return redirect('person-list')
 
 
-class RelationPersonCreateView(CreateView):
+class PersonDeleteView(generic.DeleteView):
+    model = Person
+    success_url = '/persons/'
+
+class RelationPersonCreateView(generic.CreateView):
     model = Relationship
     form_class = RelationPersonCreateModelForm
     template_name = 'create_relation.html'
@@ -88,7 +100,7 @@ class RelationPersonCreateView(CreateView):
         return reverse_lazy("person-detail", kwargs={'pk': person_id})
 
 
-class AddressCreateView(CreateView):
+class AddressCreateView(generic.CreateView):
     model = Address
     form_class = AddressCreateModelForm
     template_name = 'create_address.html'

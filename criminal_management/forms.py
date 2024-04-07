@@ -5,7 +5,14 @@ from .models import Faction, Incident
 class FactionForm(forms.ModelForm):
     class Meta:
         model = Faction
-        fields = '__all__'
+        fields = ['name', 'member', 'leaders', 'details']
+        widgets = {
+            "name": forms.TextInput(attrs={'class': 'form-control'}),
+            "member": forms.SelectMultiple(attrs={'class': 'form-select'}),
+            'leaders': forms.SelectMultiple(attrs={'class': 'form-select'}),
+            'details': forms.Textarea(attrs={'class': 'form-control', 'rows':"4"})
+
+        }
 
 
 class IncidentForm(forms.ModelForm):

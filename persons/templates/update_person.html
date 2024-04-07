@@ -1,0 +1,70 @@
+{% extends "base/base.html" %}
+{% block 'content' %}
+
+{% comment %} Início do modal {% endcomment %}
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza de que deseja excluir esta ocorrência?
+      </div>
+      <div class="modal-footer">
+        <form method="post" action='{% url "person-delete" person.id %}'>
+        {% csrf_token %}
+        <div class="buttons-container">
+          <button type="submit" class="btn btn-danger">Deletar Pessoa</button>
+          <a href="{% url 'person-detail' person.id  %}" class="btn btn-secondary">Cancelar</a>
+
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% comment %} Fim do modal {% endcomment %}
+
+
+
+<div class='container-md mt-4 d-flex justify-content-center align-items-center bg-body-secondary' >
+    <div class='col-md-5'>
+        
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            
+            <p><strong>Atualizar </strong> dados para <strong>{{person.name}}</strong> <br>
+          
+        </div>
+        
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>Instruções!</strong>
+          <p>Nesta seção é possível atualizar dados pessoais. <br>
+            <ul>
+                <li> <strong>Cancelar</strong> leva você de volta a pessoa</li>
+                <li> <strong>Atualizar</strong> Ajusta os dados da pessoa</li>
+                <li> Caso queira voltar a lista de pessoas, utilize a <strong>barra de navegação</strong></li>
+              </ul>
+            </div>
+
+          </div>
+          
+          <div class='col-md-6'>
+            <form method='POST' action='{% url "person-update" person.id %}' class='p-4 bg-body-secondary'>
+        {% csrf_token %}
+        <table class='table'>
+                {{form.as_table}}
+            </table>
+          
+            <button type="submit" class="btn btn-outline-primary btn-block ">Atualizar</button>
+            {% comment %} <input type="hidden" name="person" value={{incident.person_relation.id}}> {% endcomment %}
+            <a href='{% url "person-detail" person.id%}' class='btn btn-outline-warning btn-block'>Cancelar</a>
+            <a href="#" class="btn btn-outline-danger btn-block" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Deletar</a>        
+
+          </form>
+        </div>
+</div>
+
+
+{% endblock 'content' %}
