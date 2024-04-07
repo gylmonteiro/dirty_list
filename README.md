@@ -13,4 +13,4 @@
 - `Dashboard`: Principais dados voltados para visualização rápida de números e percentuais que dão suporte a uma ánalise de dados com facilidade;
 
 ## ⚒️ Rodar o projeto
-** Clonar o repositório: ```git clone git@github.com:gylmonteiro/dirty_list.git
+** Clonar o repositório: ```git clone git@github.com:gylmonteiro/dirty_list.git```
