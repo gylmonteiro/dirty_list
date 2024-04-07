@@ -13,4 +13,9 @@
 - `Dashboard`: Principais dados voltados para visualização rápida de números e percentuais que dão suporte a uma ánalise de dados com facilidade;
 
 ## ⚒️ Rodar o projeto
-** Clonar o repositório: ```git clone git@github.com:gylmonteiro/dirty_list.git```
+- Clonar o repositório: ```git clone git@github.com:gylmonteiro/dirty_list.git```
+- Criar a virtual env: ```python -m venv venv```
+- Instalar dependências do projeto: ```pip install requirements.txt```
+- Fazer as migrações: ```python manage.py makemigrations```
+- Aplicar as migrações: ```python manage.py migrate```
+- Rodar a aplicação: ```python manage.py runserver```
