@@ -7,3 +7,6 @@
 > 🚧 Projeto em fase de construção final 🚧
 
 # 🔨 Funcionalidades do projeto
+- `Funcionalidade 1`: Cadastro de pessoas, com dados pessoais e endereços
+- `Funcionalidade 2`: Cadastro de grupos de organizações (exemplo: criminais :rotating_light:)
+- 
