@@ -19,3 +19,9 @@
 - Fazer as migrações: ```python manage.py makemigrations```
 - Aplicar as migrações: ```python manage.py migrate```
 - Rodar a aplicação: ```python manage.py runserver```
+
+## :atom: Tecnologias e técnicas utilizadas
+- `Python`
+- `HTML, CSS, Javascript`
+- `Django`
+- `ChartJS`
