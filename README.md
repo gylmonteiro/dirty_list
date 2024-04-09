@@ -23,5 +23,6 @@
 ## :atom: Tecnologias e técnicas utilizadas
 - `Python`
 - `HTML, CSS, Javascript`
+- `BootStrap5`
 - `Django`
 - `ChartJS`
