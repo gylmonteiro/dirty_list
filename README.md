@@ -26,3 +26,6 @@
 - `BootStrap5`
 - `Django`
 - `ChartJS`
+
+# Autor
+| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/37356058?v=4" width=115><br><sub>Gyl Monteiro</sub>](https://github.com/camilafernanda) | 
